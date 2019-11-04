@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Navbar from "./components/Navbar";
+import Header from "./components/Header";
+import SearchPets from "./components/SearchPets";
 
 const App = () => {
   return (
-    <div className="app ui container">
-      <Navbar />
+    <div className="app">
+      <Header />
+      <SearchPets />
     </div>
   );
 };
