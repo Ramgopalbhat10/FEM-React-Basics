@@ -9,7 +9,7 @@ const useDropdown = (label, defalutState, options) => {
       fluid
       label={label}
       options={options}
-      placeholder={label}
+      placeholder={`Select ${label}`}
       value={state}
       onChange={e => setState(e.target.textContent)}
       onBlur={e => setState(e.target.textContent)}

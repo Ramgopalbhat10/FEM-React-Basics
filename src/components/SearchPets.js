@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ANIMALS } from "@frontendmasters/pet";
+import React, { useState, useEffect } from "react";
+import pet, { ANIMALS } from "@frontendmasters/pet";
 import { Button, Form } from "semantic-ui-react";
 import useDropdown from "../hooks/useDropdown";
 
@@ -16,33 +16,49 @@ const SearchPets = () => {
   const animalOptions = getOptions(ANIMALS);
 
   const [location, setLocation] = useState("Seattle, WA");
-  const [animal, AnimalDropdown] = useDropdown("Animal", "", animalOptions);
+  const [animal, AnimalDropdown] = useDropdown("Animal", "dog", animalOptions);
   const [breeds, setBreeds] = useState([]);
 
   const breedOptions = getOptions(breeds);
-  const [breed, BreedDropdown] = useDropdown("Breed", "", breedOptions);
+  const [breed, BreedDropdown, setBreed] = useDropdown(
+    "Breed",
+    "",
+    breedOptions
+  );
 
   function getOptions(items) {
-    return items.map(item => {
-      return { key: item, text: item, value: item };
-    });
+    if (items.length === 0) {
+      return [];
+    } else {
+      return items.map(item => {
+        return { key: item, text: item, value: item };
+      });
+    }
   }
+
+  useEffect(() => {
+    setBreeds([]);
+    setBreed("");
+
+    pet.breeds(animal).then(({ breeds: apiBreeds }) => {
+      const breedStrings = apiBreeds.map(({ name }) => name);
+      setBreeds(breedStrings);
+    }, console.error);
+  }, [animal, setBreed, setBreeds]);
 
   return (
     <div className="search" style={styles}>
       <Form>
-        <Form.Group widths="equal">
-          <Form.Input
-            fluid
-            label="Location"
-            placeholder="Location"
-            value={location}
-            onChange={e => setLocation(e.target.value)}
-            onBlur={e => setLocation(e.target.value)}
-          />
-          <AnimalDropdown />
-          <BreedDropdown />
-        </Form.Group>
+        <Form.Input
+          fluid
+          label="Location"
+          placeholder="Location"
+          value={location}
+          onChange={e => setLocation(e.target.value)}
+          onBlur={e => setLocation(e.target.value)}
+        />
+        <AnimalDropdown />
+        <BreedDropdown />
         <Button className="ui primary button" type="submit">
           Submit
         </Button>
