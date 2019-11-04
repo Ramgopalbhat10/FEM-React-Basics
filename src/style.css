@@ -9,6 +9,10 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.app {
-  text-align: center;
+body {
+  background: #fdfdfdfd;
+}
+
+select {
+  padding: 5px 14px !important;
 }
