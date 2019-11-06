@@ -15,7 +15,6 @@ function Header() {
           <img style={{ width: "25px" }} src={logo}></img>
         </span>
       </h1>
-      <h4>Search below to adopt a new pet</h4>
     </div>
   );
 }
