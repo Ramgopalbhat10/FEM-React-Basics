@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
 import pet, { ANIMALS } from "@frontendmasters/pet";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Container } from "semantic-ui-react";
 import useDropdown from "../hooks/useDropdown";
+import Results from "./Results";
+import Loading from "./Loading";
 
 const styles = {
-  maxWidth: "500px",
-  margin: "auto",
-  padding: "20px",
-  background: "#3f51b570",
-  borderRadius: "5px",
-  boxShadow: "10px 10px 10px 0px #dadada"
+  search: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  form: {
+    margin: "20px",
+    padding: "20px",
+    background: "#3f51b570",
+    borderRadius: "5px",
+    boxShadow: "10px 10px 10px 0px #dadada"
+  }
 };
 
 const SearchPets = () => {
@@ -25,6 +33,20 @@ const SearchPets = () => {
     "",
     breedOptions
   );
+  const [pets, setPets] = useState([]);
+  const [loading, isLoading] = useState();
+
+  async function requestPets() {
+    isLoading(true);
+    const { animals } = await pet.animals({
+      location,
+      breed,
+      type: animal
+    });
+
+    setPets(animals || []);
+    isLoading(false);
+  }
 
   function getOptions(items) {
     if (items.length === 0) {
@@ -47,22 +69,40 @@ const SearchPets = () => {
   }, [animal, setBreed, setBreeds]);
 
   return (
-    <div className="search" style={styles}>
-      <Form>
-        <Form.Input
-          fluid
-          label="Location"
-          placeholder="Location"
-          value={location}
-          onChange={e => setLocation(e.target.value)}
-          onBlur={e => setLocation(e.target.value)}
-        />
-        <AnimalDropdown />
-        <BreedDropdown />
-        <Button className="ui primary button" type="submit">
-          Submit
-        </Button>
-      </Form>
+    <div className="search" style={styles.search}>
+      <Container>
+        <Form
+          style={styles.form}
+          onSubmit={e => {
+            e.preventDefault();
+            requestPets();
+          }}
+        >
+          <Form.Input
+            fluid
+            label="Location"
+            placeholder="Location"
+            value={location}
+            onChange={e => setLocation(e.target.value)}
+            onBlur={e => setLocation(e.target.value)}
+          />
+          <AnimalDropdown />
+          <BreedDropdown />
+          <Button className="ui primary button" type="submit">
+            Submit
+          </Button>
+        </Form>
+      </Container>
+
+      {pets.length === 0 && !loading && (
+        <h4 style={{ textAlign: "center" }}>Select options to find a pet</h4>
+      )}
+      {loading && (
+        <Container>
+          <Loading number={10} />
+        </Container>
+      )}
+      {loading === false && <Results pets={pets} />}
     </div>
   );
 };
