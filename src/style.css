@@ -16,3 +16,30 @@ body {
 select {
   padding: 5px 14px !important;
 }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container {
+  width: 500px !important;
+}
+
+.tiny > img {
+  min-height: 100px;
+  width: 100px;
+}
+
+.tiny {
+  clip-path: circle(50% at 50% 50%) !important;
+  width: 100px !important;
+  height: 100px !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .ui.container {
+    width: 500px !important;
+  }
+}
