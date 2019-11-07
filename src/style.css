@@ -38,8 +38,47 @@ select {
   height: 100px !important;
 }
 
+.ui.items:last-child,
+.ui.items:first-child {
+  margin: 20px !important;
+}
+
+.button > i {
+  margin: 0 !important;
+}
+.ui.primary.button {
+  transition: box-shadow 0.2s linear 0s !important;
+  box-shadow: none;
+}
+.ui.primary.button:hover {
+  box-shadow: 7px 7px 10px 0px #00000054;
+}
+
+/* media queries */
+
 @media only screen and (max-width: 767px) {
   .ui.container {
     width: 500px !important;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .ui.container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 2560px) {
+  .search {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: center;
+  }
+  .ui.container > div {
+    margin: 20px 20px !important;
+  }
+  .ui.container {
+    margin: 0;
   }
 }
