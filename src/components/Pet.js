@@ -13,7 +13,7 @@ const Pet = props => {
     gender
   } = props;
 
-  let hero = "http://placecorgi.com/300/300";
+  let hero = "http://placecorgi.com/125/100";
 
   if (media.length) {
     hero = media[0].small;
@@ -28,8 +28,7 @@ const Pet = props => {
         <Item.Description>{description}</Item.Description>
         <Item.Extra>
           <Button primary floated="right">
-            Check
-            <Icon name="right chevron" />
+            <Icon name="arrow right" />
           </Button>
           <Label icon="globe" content={location}></Label>
         </Item.Extra>
