@@ -89,17 +89,17 @@ const SearchPets = () => {
           <AnimalDropdown />
           <BreedDropdown />
           <Button className="ui primary button" type="submit">
-            Submit
+            Search
           </Button>
         </Form>
+        {pets.length === 0 && !loading && (
+          <h4 style={{ textAlign: "center" }}>Select options to find a pet</h4>
+        )}
       </Container>
 
-      {pets.length === 0 && !loading && (
-        <h4 style={{ textAlign: "center" }}>Select options to find a pet</h4>
-      )}
       {loading && (
         <Container>
-          <Loading number={10} />
+          <Loading loaders={10} />
         </Container>
       )}
       {loading === false && <Results pets={pets} />}
